@@ -5,5 +5,6 @@ exports.knex = require('knex')({
     user : process.env.DB_USER,
     password : process.env.DB_PASSWD,
     database : process.env.DB_NAME
-  }
+  },
+  pool: { min: 0, max: 20 }
 })
