@@ -1,0 +1,15 @@
+{
+  "name": "sked-api",
+  "version": "0.2.0",
+  "description": "The sked API is responsible for adding new schedules and associated workflows, as well as deactivating them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.indiqus.net:sked/sked-api.git"
+  },
+  "author": "Rudi MK <rudraksh@indiqus.com>",
+  "license": "ISC"
+}
