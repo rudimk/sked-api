@@ -13,6 +13,7 @@
   "author": "Rudi MK <rudraksh@indiqus.com>",
   "license": "ISC",
   "dependencies": {
+    "diet": "^0.16.0",
     "knex": "^0.14.6",
     "mysql2": "^1.5.3"
   }
