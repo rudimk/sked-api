@@ -4,6 +4,7 @@
   "description": "The sked API is responsible for adding new schedules and associated workflows, as well as deactivating them.",
   "main": "index.js",
   "scripts": {
+    "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
