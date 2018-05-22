@@ -17,3 +17,6 @@ app.post('/api/v2/schedule', controllers.newScheduleController)
 
 // Endpoint for updating an existing schedule and/or its workflow.
 app.put('/api/v2/schedule', controllers.updateScheduleController)
+
+// Endpoint for cycling a schedule's active status.
+app.patch('/api/v2/schedule', controllers.cycleScheduleController)

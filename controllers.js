@@ -59,5 +59,20 @@ async function updateScheduleController($){
 }
 
 
+async function cycleScheduleController($){
+	try{
+		let cycleSchedule = await db('schedules').where('id', '=', $.query['id']).update({active: $.query['active']})
+		$.status(200)
+		$.json({success: true, message: `Schedule status successfully set to ${$.query['active']}.`})
+	}
+	catch(err){
+		logger.winston.error("Error detected in cycleScheduleController: ", err)
+		$.status(500)
+		$.json({message: err})
+	}
+}
+
+
 exports.newScheduleController = newScheduleController
 exports.updateScheduleController = updateScheduleController
+exports.cycleScheduleController = cycleScheduleController
