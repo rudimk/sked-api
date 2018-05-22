@@ -4,6 +4,10 @@
   "description": "The sked API is responsible for adding new schedules and associated workflows, as well as deactivating them.",
   "main": "index.js",
   "scripts": {
+    "create:migration": "knex migrate:make",
+    "migrate:db": "knex migrate:latest",
+    "seed:db": "knex seed:run",
+    "dev": "node_modules/nodemon/bin/nodemon.js index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,9 +17,12 @@
   "author": "Rudi MK <rudraksh@indiqus.com>",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.3",
+    "diet": "^0.16.0",
     "knex": "^0.14.6",
-    "mysql2": "^1.5.3"
+    "mysql": "^2.15.0",
+    "winston": "^2.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
   }
 }

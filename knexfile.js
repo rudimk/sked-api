@@ -1,4 +1,4 @@
-exports.knex = require('knex')({
+module.exports = {
   client: 'mysql',
   connection: {
     host : process.env.DB_HOST,
@@ -7,4 +7,4 @@ exports.knex = require('knex')({
     database : process.env.DB_NAME
   },
   pool: { min: 0, max: 20 }
-})
+}
