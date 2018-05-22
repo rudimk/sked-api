@@ -4,6 +4,8 @@
   "description": "The sked API is responsible for adding new schedules and associated workflows, as well as deactivating them.",
   "main": "index.js",
   "scripts": {
+    "create:table": "knex migrate:make",
+    "migrate:db": "knex migrate:latest",
     "dev": "node_modules/nodemon/bin/nodemon.js index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
