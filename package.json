@@ -1,13 +1,20 @@
 {
   "name": "sked-api",
-  "version": "0.2.0",
+  "version": "0.2.0-rc1",
   "description": "The sked API is responsible for adding new schedules and associated workflows, as well as deactivating them.",
   "main": "index.js",
+  "config": {
+    "registry": "registry.indiqus.net/sked/sked-api"
+  },
   "scripts": {
     "create:migration": "knex migrate:make",
     "migrate:db": "knex migrate:latest",
     "seed:db": "knex seed:run",
     "dev": "node_modules/nodemon/bin/nodemon.js index.js",
+    "build": "npm pack && docker build -t $npm_package_name:v$npm_package_version .",
+    "tag": "docker tag $npm_package_name:v$npm_package_version $npm_package_config_registry/$npm_package_name:v$npm_package_version && docker tag $npm_package_name:v$npm_package_version $npm_package_config_registry/$npm_package_name:latest",
+    "push": "docker push $npm_package_config_registry/$npm_package_name:v$npm_package_version && docker push $npm_package_config_registry/$npm_package_name:latest",
+    "prep": "npm run clean && npm run build && npm run tag && npm run push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
