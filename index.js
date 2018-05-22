@@ -14,3 +14,6 @@ app.get('/api/v2/status', healthCheck.healthCheck)
 
 // Endpoint for adding a new schedule and associated workflow.
 app.post('/api/v2/schedule', controllers.newScheduleController)
+
+// Endpoint for updating an existing schedule and/or its workflow.
+app.put('/api/v2/schedule', controllers.updateScheduleController)
