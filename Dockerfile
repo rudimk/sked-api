@@ -7,7 +7,7 @@ MAINTAINER Rudraksh MK
 #RUN npm i -g sked-api*.tgz --prefix /usr/src/app/
 #WORKDIR /usr/src/app/lib/node_modules/sked-api
 
-COPY middleware/ controllers.js index.js knexfile.js logging.js package-lock.json package.json /root/
+COPY middleware/ controllers.js scheduler.js index.js knexfile.js logging.js package-lock.json package.json /root/
 WORKDIR /root
 RUN npm install
 
