@@ -1,5 +1,7 @@
+const uuid = require('uuid')
 const logger = require('./logging.js')
 const db = require('knex')(require('./knexfile.js'))
+const scheduler = require('./scheduler.js')
 
 
 async function newScheduleController($){
@@ -9,6 +11,7 @@ async function newScheduleController($){
 		let workflowPayload = rawPayload['workflow']
 		schedulePayload['status'] = 0
 		schedulePayload['active'] = 1
+		schedulePayload['runner_id'] = uuid.v4()
 		schedulePayload['minutes'] = JSON.stringify(schedulePayload['minutes'])
 		schedulePayload['hours'] = JSON.stringify(schedulePayload['hours'])
 		schedulePayload['days'] = JSON.stringify(schedulePayload['days'])
@@ -19,8 +22,12 @@ async function newScheduleController($){
 		workflowPayload['action_id'] = newActionRow[0]
 		workflowPayload['payload'] = JSON.stringify(workflowPayload['payload'])
 		let newWorkflowRow = await db('amqp_workflows').returning('id').insert(workflowPayload)
+		let runnerPayload = {}
+		runnerPayload['labels'] = {io_origin: 'sked-api', io_sked_runner_id: schedulePayload['runner_id'], io_sked_schedule_id: newScheduleRow[0], io_sked_workflow_id: newWorkflowRow[0]}
+		runnerPayload['environmentVars'] = {AMQP_USERNAME: workflowPayload['username'], AMQP_PASSWORD: workflowPayload['password'], AMQP_HOST: workflowPayload['host'], AMQP_PORT: workflowPayload['port'], AMQP_EXCHANGE: workflowPayload['exchange'], AMQP_ROUTING_KEY: workflowPayload['routing_key'], AMQP_PAYLOAD: workflowPayload['payload'], TIMEZONE: schedulePayload['timezone'], MINUTES: schedulePayload['minutes'], HOURS: schedulePayload['hours'], WEEKDAYS: schedulePayload['weekdays'], DAYS: schedulePayload['days'], MONTHS: schedulePayload['months'], SCHEDULE_ID: newScheduleRow[0], WORKFLOW_ID: newWorkflowRow[0]}
+		let scheduleRunner = await scheduler.startRunner(runnerPayload)
 		$.status(200)
-		$.json({success: true, message: 'Schedule created successfully.', schedule_id: newScheduleRow[0], workflow_id: newWorkflowRow[0]})
+		$.json({success: true, message: 'Schedule created successfully.', schedule_id: newScheduleRow[0], workflow_id: newWorkflowRow[0], runner_id: scheduleRunner['id']})
 	}
 	catch(err){
 		logger.winston.error("Error detected in newScheduleController: ", err)
