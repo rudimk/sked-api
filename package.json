@@ -1,6 +1,6 @@
 {
   "name": "sked-api",
-  "version": "0.2.0-rc1",
+  "version": "0.2.0-rc2",
   "description": "The sked API is responsible for adding new schedules and associated workflows, as well as deactivating them.",
   "main": "index.js",
   "config": {
