@@ -1,6 +1,6 @@
 const server = require("diet")
-const requestLog = require('./middleware/requestLog.js')
-const healthCheck = require('./middleware/healthCheck.js')
+const requestLog = require('./requestLog.js')
+const healthCheck = require('./healthCheck.js')
 const controllers = require('./controllers.js')
 
 const app = server()
