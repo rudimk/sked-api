@@ -28,6 +28,7 @@ async function newScheduleController($){
 		runnerPayload['environmentVars'] = {AMQP_USERNAME: workflowPayload['username'], AMQP_PASSWORD: workflowPayload['password'], AMQP_HOST: workflowPayload['host'], AMQP_PORT: workflowPayload['port'], AMQP_EXCHANGE: workflowPayload['exchange'], AMQP_ROUTING_KEY: workflowPayload['routing_key'], AMQP_PAYLOAD: util.format('%j', workflowPayload['payload']), TIMEZONE: schedulePayload['timezone'], MINUTES: schedulePayload['minutes'], HOURS: schedulePayload['hours'], WEEKDAYS: schedulePayload['weekdays'], DAYS: schedulePayload['days'], MONTHS: schedulePayload['months'], SCHEDULE_ID: newScheduleRow[0], WORKFLOW_ID: newWorkflowRow[0]}
 		runnerPayload['serviceName'] = schedulePayload['runner_id']
 		let scheduleRunner = await scheduler.startRunner(runnerPayload)
+		let updateScheduleRow = await db('schedules').where('id', '=', newScheduleRow[0]).update({service_id: scheduleRunner})
 		$.status(200)
 		$.json({success: true, message: 'Schedule created successfully.', schedule_id: newScheduleRow[0], workflow_id: newWorkflowRow[0], runner_id: scheduleRunner['id']})
 	}
