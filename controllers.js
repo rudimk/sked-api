@@ -1,4 +1,5 @@
 const uuid = require('uuid')
+const util = require('util')
 const logger = require('./logging.js')
 const db = require('knex')(require('./knexfile.js'))
 const scheduler = require('./scheduler.js')
@@ -24,7 +25,8 @@ async function newScheduleController($){
 		let newWorkflowRow = await db('amqp_workflows').returning('id').insert(workflowPayload)
 		let runnerPayload = {}
 		runnerPayload['labels'] = {io_origin: 'sked-api', io_sked_runner_id: schedulePayload['runner_id'], io_sked_schedule_id: newScheduleRow[0], io_sked_workflow_id: newWorkflowRow[0]}
-		runnerPayload['environmentVars'] = {AMQP_USERNAME: workflowPayload['username'], AMQP_PASSWORD: workflowPayload['password'], AMQP_HOST: workflowPayload['host'], AMQP_PORT: workflowPayload['port'], AMQP_EXCHANGE: workflowPayload['exchange'], AMQP_ROUTING_KEY: workflowPayload['routing_key'], AMQP_PAYLOAD: workflowPayload['payload'], TIMEZONE: schedulePayload['timezone'], MINUTES: schedulePayload['minutes'], HOURS: schedulePayload['hours'], WEEKDAYS: schedulePayload['weekdays'], DAYS: schedulePayload['days'], MONTHS: schedulePayload['months'], SCHEDULE_ID: newScheduleRow[0], WORKFLOW_ID: newWorkflowRow[0]}
+		runnerPayload['environmentVars'] = {AMQP_USERNAME: workflowPayload['username'], AMQP_PASSWORD: workflowPayload['password'], AMQP_HOST: workflowPayload['host'], AMQP_PORT: workflowPayload['port'], AMQP_EXCHANGE: workflowPayload['exchange'], AMQP_ROUTING_KEY: workflowPayload['routing_key'], AMQP_PAYLOAD: util.format('%j', workflowPayload['payload']), TIMEZONE: schedulePayload['timezone'], MINUTES: schedulePayload['minutes'], HOURS: schedulePayload['hours'], WEEKDAYS: schedulePayload['weekdays'], DAYS: schedulePayload['days'], MONTHS: schedulePayload['months'], SCHEDULE_ID: newScheduleRow[0], WORKFLOW_ID: newWorkflowRow[0]}
+		runnerPayload['serviceName'] = schedulePayload['runner_id']
 		let scheduleRunner = await scheduler.startRunner(runnerPayload)
 		$.status(200)
 		$.json({success: true, message: 'Schedule created successfully.', schedule_id: newScheduleRow[0], workflow_id: newWorkflowRow[0], runner_id: scheduleRunner['id']})
