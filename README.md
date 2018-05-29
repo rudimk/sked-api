@@ -15,13 +15,13 @@ npm install
 Next, you need to set up Sked's database and run migrations and seed constants. Sked currently supports MySQL. Ensure there's a blank database available. Database configuration data is injected as environment variables:
 
 ```
-DB_HOST=localhost DB_USER=root DB_PASSWD=porcupinetreevoyage34 DB_NAME=sked npm run migrate:db
-DB_HOST=localhost DB_USER=root DB_PASSWD=porcupinetreevoyage34 DB_NAME=sked npm run seed:db
+DB_HOST=<> DB_USER=<> DB_PASSWD=<> DB_NAME=<> npm run migrate:db
+DB_HOST=<> DB_USER=<> DB_PASSWD=<> DB_NAME=<> npm run seed:db
 ```
 
-To create a new migration for a new table or altering an existing table, use `DB_HOST=localhost DB_USER=root DB_PASSWD=porcupinetreevoyage34 DB_NAME=sked npm run create:migration -- <NAME_OF_MIGRATION>`.
+To create a new migration for a new table or altering an existing table, use `DB_HOST=<> DB_USER=<> DB_PASSWD=<> DB_NAME=<> npm run create:migration -- <NAME_OF_MIGRATION>`.
 
-Now you can run a dev server: `DB_HOST=<> DB_USER=<> DB_PASSWD=<> DB_NAME=<> RANCHER_URL=<http://IP:PORT> RANCHER_API_KEY=<> RANCHER_API_SECRET=<> RANCHER_ENV_ID=<Rancher Environment ID> RANCHER_STACK_ID=<Rancher Sked Stack ID> RUNNER_IMAGE_ID=registry.indiqus.net/sked/sked-api:<TAG> npm run dev`
+Now you can run a dev server: `DB_HOST=<> DB_USER=<> DB_PASSWD=<> DB_NAME=<> RANCHER_URL=<http://IP:PORT> RANCHER_API_KEY=<> RANCHER_API_SECRET=<> RANCHER_ENV_ID=<Rancher Environment ID> RANCHER_STACK_ID=<Rancher Sked Stack ID> RUNNER_IMAGE_ID=registry.indiqus.net/sked/sked-api:<TAG> npm run dev`. This will serve the Sked API on `0.0.0.0:8989`.
 
 To run this on Rancher, simply create a new service, and ensure the same environment variables listed above are present in the service configuration.
 
