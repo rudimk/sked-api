@@ -27,7 +27,7 @@ async function newScheduleController($){
 		runnerPayload['labels'] = {io_origin: 'sked-api', io_sked_runner_id: schedulePayload['runner_id'], io_sked_schedule_id: newScheduleRow[0], io_sked_workflow_id: newWorkflowRow[0]}
 		runnerPayload['environmentVars'] = {AMQP_USERNAME: workflowPayload['username'], AMQP_PASSWORD: workflowPayload['password'], AMQP_HOST: workflowPayload['host'], AMQP_PORT: workflowPayload['port'], AMQP_EXCHANGE: workflowPayload['exchange'], AMQP_ROUTING_KEY: workflowPayload['routing_key'], AMQP_PAYLOAD: util.format('%j', workflowPayload['payload']), TIMEZONE: schedulePayload['timezone'], MINUTES: schedulePayload['minutes'], HOURS: schedulePayload['hours'], WEEKDAYS: schedulePayload['weekdays'], DAYS: schedulePayload['days'], MONTHS: schedulePayload['months'], SCHEDULE_ID: newScheduleRow[0], WORKFLOW_ID: newWorkflowRow[0]}
 		runnerPayload['serviceName'] = schedulePayload['runner_id']
-		runnerPayload['scale'] = process.env.SCALE
+		runnerPayload['scale'] = parseInt(process.env.SCALE)
 		let scheduleRunner = await scheduler.startRunner(runnerPayload)
 		let updateScheduleRow = await db('schedules').where('id', '=', newScheduleRow[0]).update({service_id: scheduleRunner})
 		$.status(200)
