@@ -1,4 +1,4 @@
-const logging = require('../logging.js')
+const logging = require('./logging.js')
 
 // We're defining a middleware function here for logging the request timestamp, method, and url
 // TODO figure out a better way to log this
