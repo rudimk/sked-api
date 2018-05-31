@@ -10,7 +10,8 @@ async function newScheduleController($){
 		let rawPayload = JSON.parse($.body)
 		let schedulePayload = rawPayload['schedule']
 		let workflowPayload = rawPayload['workflow']
-		schedulePayload['status'] = 0
+		schedulePayload['status'] = 1
+		schedulePayload['last_run'] = 0
 		schedulePayload['active'] = 1
 		schedulePayload['runner_id'] = uuid.v4()
 		schedulePayload['minutes'] = JSON.stringify(schedulePayload['minutes'])
