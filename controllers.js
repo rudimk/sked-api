@@ -51,6 +51,7 @@ async function updateScheduleController($){
 		let schedulePayload = rawPayload['schedule']
 		let workflowPayload = rawPayload['workflow']
 		schedulePayload['status'] = 1
+		schedulePayload['last_run'] = 0
 		schedulePayload['active'] = 1
 		schedulePayload['minutes'] = JSON.stringify(schedulePayload['minutes'])
 		schedulePayload['hours'] = JSON.stringify(schedulePayload['hours'])
